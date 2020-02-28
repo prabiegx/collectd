@@ -17,6 +17,7 @@
 %global enable_dpdkevents 0
 %endif
 
+%global enable_dcpmm 0
 %global enable_dpdk_telemetry 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
@@ -252,6 +253,16 @@ BuildRequires: curl-devel
 BuildRequires: libxml2-devel
 %description curl_xml
 This plugin retrieves XML data via curl.
+
+
+%if 0%{?enable_dcpmm} >0
+%package dcpmm
+Summary:       Plugin for Intel Optane DC Presistent Memory (DCPMM)
+Provides:      %{name}-dcpmm = %{version}-%{release}
+#BuildRequires: pmwapi
+%description dcpmm
+Collect performance and health statistics from Intel Optane DC Presistent Memory
+%endif
 
 
 %package dbi
@@ -879,7 +890,6 @@ automake --add-missing --copy
 autoconf
 
 %configure \
-    --disable-dcpmm \
     --disable-ipstats \
     --disable-buddyinfo \
     --disable-ubi \
@@ -962,6 +972,11 @@ autoconf
     --disable-amqp \
 %else
     --enable-amqp \
+%endif
+%if 0%{?enable_dcpmm} >0
+    --enable-dcpmm \
+%else
+    --disable-dcpmm \
 %endif
 %if 0%{?enable_dpdkevents}==0
     --disable-dpdkevents \
@@ -1305,6 +1320,10 @@ make check
 %files curl_xml
 %{_libdir}/collectd/curl_xml.so
 
+%if 0%{?enable_dcpmm} > 0
+%files dcpmm
+%{_libdir}/collectd/dcpmm.so
+%endif
 
 %files disk
 %{_libdir}/collectd/disk.so
