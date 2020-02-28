@@ -17,7 +17,7 @@
 %global enable_dpdkevents 0
 %endif
 
-%global enable_dcpmm 0
+%global enable_dcpmm 1
 %global enable_dpdk_telemetry 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
