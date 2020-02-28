@@ -17,6 +17,7 @@
 %global enable_dpdkevents 0
 %endif
 
+%global enable_dpdk_telemetry 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
 
@@ -64,7 +65,7 @@
 Summary: Statistics collection daemon for filling RRD files
 Name: collectd
 Version: 5.10.0
-Release: 2%{?dist}
+Release: 4%{?dist}
 License: MIT and GPLv2
 Group: System Environment/Daemons
 URL: https://collectd.org/
@@ -177,6 +178,7 @@ BuildRequires: curl-devel
 BuildRequires: libxml2-devel
 %description bind
 This plugin retrieves statistics from the BIND dns server.
+
 
 %package check-uptime
 Summary:       Check for cache events for uptime metric
@@ -299,6 +301,16 @@ Dpdkevents plugin collects and reports following events from DPDK based
 applications:
 - link status of network ports bound with DPDK
 - keep alive events related to DPDK logical cores
+%endif
+
+
+%if 0%{?enable_dpdk_telemetry} >0
+%package dpdk_telemetry
+Summary:    Read errors from PCI Express Device Status
+Provides: %{name}-dpdk_telemetry = %{version}-%{release}
+BuildRequires: jansson
+%description dpdk_telemetry
+Read errors from PCI Express Device Status and AER extended capabilities
 %endif
 
 
@@ -868,6 +880,10 @@ automake --add-missing --copy
 autoconf
 
 %configure \
+    --disable-dcpmm \
+    --disable-ipstats \
+    --disable-buddyinfo \
+    --disable-ubi \
     --disable-dependency-tracking \
     --disable-silent-rules \
     --disable-barometer \
@@ -953,6 +969,11 @@ autoconf
 %endif
 %if 0%{?enable_dpdkstat}==0
     --disable-dpdkstat \
+%endif
+%if 0%{?enable_dpdk_telemetry} >0
+    --enable-dpdk_telemetry \
+%else
+    --disable-dpdk_telemetry \
 %endif
 %if 0%{?enable_intel_pmu}==0
     --disable-intel_pmu \
@@ -1307,6 +1328,11 @@ make check
 %{_libdir}/collectd/dpdkstat.so
 %endif
 
+%if 0%{?enable_dpdk_telemetry} > 0
+%files dpdk_telemetry
+%{_libdir}/collectd/dpdk_telemetry.so
+%endif
+
 %files drbd
 %{_libdir}/collectd/drbd.so
 
@@ -1551,9 +1577,6 @@ make check
 
 
 %changelog
-* Thu Feb 13 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-2
-- enable pcie_errors plugin
-
 * Fri Feb 07 2020 Matthias Runge <mrunge@redhat.com> - 5.10.0-1
 - rebase to 5.10
 
