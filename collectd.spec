@@ -1577,6 +1577,9 @@ make check
 
 
 %changelog
+* Thu Feb 13 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-2
+- enable pcie_errors plugin
+
 * Fri Feb 07 2020 Matthias Runge <mrunge@redhat.com> - 5.10.0-1
 - rebase to 5.10
 
