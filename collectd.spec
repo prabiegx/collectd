@@ -179,7 +179,6 @@ BuildRequires: libxml2-devel
 %description bind
 This plugin retrieves statistics from the BIND dns server.
 
-
 %package check-uptime
 Summary:       Check for cache events for uptime metric
 Group:         System Environment/Daemons
@@ -306,11 +305,11 @@ applications:
 
 %if 0%{?enable_dpdk_telemetry} >0
 %package dpdk_telemetry
-Summary:    Read errors from PCI Express Device Status
-Provides: %{name}-dpdk_telemetry = %{version}-%{release}
+Summary:       Plugin to fetch DPDK metrics
+Provides:      %{name}-dpdk_telemetry = %{version}-%{release}
 BuildRequires: jansson
 %description dpdk_telemetry
-Read errors from PCI Express Device Status and AER extended capabilities
+Provides an easy way to use the DPDK telemetry API to query ethernet device metrics.
 %endif
 
 
