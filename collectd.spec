@@ -17,6 +17,9 @@
 %global enable_dpdkevents 0
 %endif
 
+%global enable_dcpmm 1
+%global enable_dpdk_telemetry 1
+%global enable_logparser 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
 
@@ -63,8 +66,8 @@
 
 Summary: Statistics collection daemon for filling RRD files
 Name: collectd
-Version: 5.10.0
-Release: 2%{?dist}
+Version: 5.11.0
+Release: 1%{?dist}
 License: MIT and GPLv2
 Group: System Environment/Daemons
 URL: https://collectd.org/
@@ -253,6 +256,15 @@ BuildRequires: libxml2-devel
 This plugin retrieves XML data via curl.
 
 
+%if 0%{?enable_dcpmm} >0
+%package dcpmm
+Summary:       Plugin for Intel Optane DC Presistent Memory (DCPMM)
+Provides:      %{name}-dcpmm = %{version}-%{release}
+%description dcpmm
+Collect performance and health statistics from Intel Optane DC Presistent Memory
+%endif
+
+
 %package dbi
 Summary:       DBI plugin for collectd
 Group:         System Environment/Daemons
@@ -286,7 +298,7 @@ Summary:       DPDKstat plugin for collectd
 Requires:      %{name}%{?_isa} = %{version}-%{release}
 BuildRequires: dpdk-devel
 %description  dpdkstat
-This plugin collects data from dpdkstat
+This plugin collects data from dpdkstat.
 %endif
 
 %if 0%{?enable_dpdkevents} == 1
@@ -299,6 +311,16 @@ Dpdkevents plugin collects and reports following events from DPDK based
 applications:
 - link status of network ports bound with DPDK
 - keep alive events related to DPDK logical cores
+%endif
+
+
+%if 0%{?enable_dpdk_telemetry} >0
+%package dpdk_telemetry
+Summary:       Plugin to fetch DPDK metrics
+Provides:      %{name}-dpdk_telemetry = %{version}-%{release}
+BuildRequires: jansson
+%description dpdk_telemetry
+Provides an easy way to use the DPDK telemetry API to query ethernet device metrics.
 %endif
 
 
@@ -331,6 +353,17 @@ Requires:      %{name}%{?_isa} = %{version}-%{release}
 
 %description hugepages
 This plugin reports the number of used and free hugepages on Linux.
+
+
+%if 0%{?enable_logparser} >0
+%package logparser
+Summary:  Parse different kinds of logs
+Provides: %{name}-logparser = %{version}-%{release}
+%description logparser
+Plugin searches the log file for messages which contain several matches
+(two or more). When all mandatory matches are found then it sends proper
+notification containing all fetched values.
+%endif
 
 
 %ifarch x86_64
@@ -879,6 +912,12 @@ autoconf
     --disable-synproxy \
     --disable-write_stackdriver \
     --disable-gpu_nvidia \
+    --disable-buddyinfo \
+    --disable-capabilities \
+    --disable-ipstats \
+    --disable-redfish \
+    --disable-ubi \
+    --disable-write_influxdb_udp \
 %if 0%{?enable_lvm}
     --enable-lvm \
 %else
@@ -948,11 +987,26 @@ autoconf
 %else
     --enable-amqp \
 %endif
+%if 0%{?enable_dcpmm} >0
+    --enable-dcpmm \
+%else
+    --disable-dcpmm \
+%endif
 %if 0%{?enable_dpdkevents}==0
     --disable-dpdkevents \
 %endif
 %if 0%{?enable_dpdkstat}==0
     --disable-dpdkstat \
+%endif
+%if 0%{?enable_dpdk_telemetry} >0
+    --enable-dpdk_telemetry \
+%else
+    --disable-dpdk_telemetry \
+%endif
+%if 0%{?enable_logparser} >0
+    --enable-logparser \
+%else
+    --disable-logparser \
 %endif
 %if 0%{?enable_intel_pmu}==0
     --disable-intel_pmu \
@@ -1285,6 +1339,10 @@ make check
 %files curl_xml
 %{_libdir}/collectd/curl_xml.so
 
+%if 0%{?enable_dcpmm} > 0
+%files dcpmm
+%{_libdir}/collectd/dcpmm.so
+%endif
 
 %files disk
 %{_libdir}/collectd/disk.so
@@ -1305,6 +1363,11 @@ make check
 %if 0%{?enable_dpdkstat} > 0
 %files dpdkstat
 %{_libdir}/collectd/dpdkstat.so
+%endif
+
+%if 0%{?enable_dpdk_telemetry} > 0
+%files dpdk_telemetry
+%{_libdir}/collectd/dpdk_telemetry.so
 %endif
 
 %files drbd
@@ -1347,6 +1410,11 @@ make check
 
 %files log_logstash
 %{_libdir}/collectd/log_logstash.so
+
+%if 0%{?enable_logparser} > 0
+%files logparser
+%{_libdir}/%{name}/logparser.so
+%endif
 
 %if 0%{?enable_lvm}
 %files lvm
@@ -1551,6 +1619,9 @@ make check
 
 
 %changelog
+* Mon Mar 02 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.11.0-1
+- [DRAFT] rebase to 5.11
+
 * Thu Feb 13 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-2
 - enable pcie_errors plugin
 
