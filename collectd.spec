@@ -1619,8 +1619,8 @@ make check
 
 
 %changelog
-* Mon Mar 02 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-3
-- preparation for rebase to 5.11
+* Mon Mar 02 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.11.0-1
+- [DRAFT] rebase to 5.11
 
 * Thu Feb 13 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-2
 - enable pcie_errors plugin
