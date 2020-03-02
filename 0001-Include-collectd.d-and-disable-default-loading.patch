@@ -1,7 +1,7 @@
 From 34e4228903f7137c0e73ff561ebdd32e6ac26a97 Mon Sep 17 00:00:00 2001
 From: Piotr Rabiega <piotrx.rabiega@intel.com>
 Date: Wed, 26 Feb 2020 09:19:27 +0000
-Subject: [PATCH] [PATCH] Include collectd.d and disable default loading
+Subject: [PATCH] Include collectd.d and disable default loading
 
 This patch will disable plugins loaded by default and will
 aply config read from collectd.d
