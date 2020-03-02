@@ -19,6 +19,7 @@
 
 %global enable_dcpmm 1
 %global enable_dpdk_telemetry 1
+%global enable_logparser 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
 
@@ -353,6 +354,18 @@ Requires:      %{name}%{?_isa} = %{version}-%{release}
 
 %description hugepages
 This plugin reports the number of used and free hugepages on Linux.
+
+
+%if 0%{?enable_logparser} >0
+%package logparser
+Summary:  Parse different kinds of logs
+Provides: %{name}-logparser = %{version}-%{release}
+
+%description logparser
+Plugin searches the log file for messages which contain several matches
+(two or more). When all mandatory matches are found then it sends proper
+notification containing all fetched values.
+%endif
 
 
 %ifarch x86_64
@@ -992,6 +1005,11 @@ autoconf
 %else
     --disable-dpdk_telemetry \
 %endif
+%if 0%{?enable_logparser} >0
+    --enable-logparser \
+%else
+    --disable-logparser \
+%endif
 %if 0%{?enable_intel_pmu}==0
     --disable-intel_pmu \
 %else
@@ -1394,6 +1412,11 @@ make check
 
 %files log_logstash
 %{_libdir}/collectd/log_logstash.so
+
+%if 0%{?enable_logparser} > 0
+%files logparser
+%{_libdir}/%{name}/logparser.so
+%endif
 
 %if 0%{?enable_lvm}
 %files lvm
