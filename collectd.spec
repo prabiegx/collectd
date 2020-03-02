@@ -260,7 +260,6 @@ This plugin retrieves XML data via curl.
 %package dcpmm
 Summary:       Plugin for Intel Optane DC Presistent Memory (DCPMM)
 Provides:      %{name}-dcpmm = %{version}-%{release}
-#BuildRequires: pmwapi
 %description dcpmm
 Collect performance and health statistics from Intel Optane DC Presistent Memory
 %endif
@@ -299,7 +298,7 @@ Summary:       DPDKstat plugin for collectd
 Requires:      %{name}%{?_isa} = %{version}-%{release}
 BuildRequires: dpdk-devel
 %description  dpdkstat
-This plugin collects data from dpdkstat
+This plugin collects data from dpdkstat.
 %endif
 
 %if 0%{?enable_dpdkevents} == 1
@@ -360,7 +359,6 @@ This plugin reports the number of used and free hugepages on Linux.
 %package logparser
 Summary:  Parse different kinds of logs
 Provides: %{name}-logparser = %{version}-%{release}
-
 %description logparser
 Plugin searches the log file for messages which contain several matches
 (two or more). When all mandatory matches are found then it sends proper
