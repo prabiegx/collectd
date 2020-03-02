@@ -890,9 +890,6 @@ automake --add-missing --copy
 autoconf
 
 %configure \
-    --disable-ipstats \
-    --disable-buddyinfo \
-    --disable-ubi \
     --disable-dependency-tracking \
     --disable-silent-rules \
     --disable-barometer \
@@ -904,6 +901,9 @@ autoconf
     --disable-synproxy \
     --disable-write_stackdriver \
     --disable-gpu_nvidia \
+    --disable-buddyinfo \
+    --disable-ipstats \
+    --disable-ubi \
 %if 0%{?enable_lvm}
     --enable-lvm \
 %else
