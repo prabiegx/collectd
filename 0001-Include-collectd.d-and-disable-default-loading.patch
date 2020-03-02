@@ -82,7 +82,7 @@ index f6a6206..e6454df 100644
  #    </Type>
  #  </Host>
  #</Plugin>
-++Include "/etc/collectd.d"
++Include "/etc/collectd.d"
 -- 
 1.8.3.1
 
