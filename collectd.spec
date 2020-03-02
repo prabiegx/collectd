@@ -903,6 +903,7 @@ autoconf
     --disable-gpu_nvidia \
     --disable-buddyinfo \
     --disable-ipstats \
+    --disable-redfish \
     --disable-ubi \
 %if 0%{?enable_lvm}
     --enable-lvm \
@@ -1595,7 +1596,7 @@ make check
 
 
 %changelog
-* Mon Mar 01 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-3
+* Mon Mar 02 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-3
 - preparation for rebase to 5.11
 
 * Thu Feb 13 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-2
