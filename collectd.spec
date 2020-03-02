@@ -901,8 +901,12 @@ autoconf
     --disable-synproxy \
     --disable-write_stackdriver \
     --disable-gpu_nvidia \
+    --disable-buddyinfo \
+    --disable-capabilities \
     --disable-ipstats \
     --disable-redfish \
+    --disable-ubi \
+    --disable-write_influxdb_udp \
 %if 0%{?enable_lvm}
     --enable-lvm \
 %else
