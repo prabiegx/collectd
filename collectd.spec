@@ -66,7 +66,7 @@
 Summary: Statistics collection daemon for filling RRD files
 Name: collectd
 Version: 5.10.0
-Release: 4%{?dist}
+Release: 3%{?dist}
 License: MIT and GPLv2
 Group: System Environment/Daemons
 URL: https://collectd.org/
@@ -1595,6 +1595,9 @@ make check
 
 
 %changelog
+* Mon Mar 01 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-3
+- preparation for rebase to 5.11
+
 * Thu Feb 13 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.10.0-2
 - enable pcie_errors plugin
 
