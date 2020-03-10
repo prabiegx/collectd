@@ -888,6 +888,7 @@ autoconf
     --disable-write_stackdriver \
     --disable-gpu_nvidia \
     --disable-buddyinfo \
+    --disable-capabilities \
     --disable-ipstats \
     --disable-redfish \
     --disable-slurm \
