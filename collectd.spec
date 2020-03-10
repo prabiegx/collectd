@@ -63,8 +63,8 @@
 
 Summary: Statistics collection daemon for filling RRD files
 Name: collectd
-Version: 5.10.0
-Release: 3%{?dist}
+Version: 5.11.0
+Release: 1%{?dist}
 License: MIT and GPLv2
 Group: System Environment/Daemons
 URL: https://collectd.org/
@@ -887,6 +887,9 @@ autoconf
     --disable-synproxy \
     --disable-write_stackdriver \
     --disable-gpu_nvidia \
+    --disable-ipstats \
+    --disable-redfish \
+    --disable-slurm \
 %if 0%{?enable_lvm}
     --enable-lvm \
 %else
