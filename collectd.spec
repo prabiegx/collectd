@@ -892,6 +892,7 @@ autoconf
     --disable-ipstats \
     --disable-redfish \
     --disable-slurm \
+    --disable-ubi \
 %if 0%{?enable_lvm}
     --enable-lvm \
 %else
