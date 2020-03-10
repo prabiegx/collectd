@@ -18,6 +18,7 @@
 %endif
 
 %global enable_dpdk_telemetry 1
+%global enable_logparser 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
 
@@ -421,6 +422,17 @@ Group:         System Environment/Daemons
 Requires:      libcollectdclient%{?_isa} = %{version}-%{release}
 %description -n libcollectdclient-devel
 Development files for libcollectdclient.
+
+
+%if 0%{?enable_logparser} >0
+%package logparser
+Summary:  Parse different kinds of logs
+Provides: %{name}-logparser = %{version}-%{release}
+%description logparser
+Plugin searches the log file for messages which contain several matches
+(two or more). When all mandatory matches are found then it sends proper
+notification containing all fetched values.
+%endif
 
 
 %package log_logstash
@@ -995,6 +1007,11 @@ autoconf
 %else
     --enable-intel_rdt \
 %endif
+%if 0%{?enable_logparser} >0
+    --enable-logparser \
+%else
+    --disable-logparser \
+%endif
     --disable-xencpu \
 %if 0%{?enable_prometheus}==0
     --disable-write_prometheus \
@@ -1380,6 +1397,11 @@ make check
 %dir %{_datadir}/collectd/java/
 %{_datadir}/collectd/java/collectd-api.jar
 %doc %{_mandir}/man5/collectd-java.5*
+
+%if 0%{?enable_logparser} > 0
+%files logparser
+%{_libdir}/%{name}/logparser.so
+%endif
 
 %files log_logstash
 %{_libdir}/collectd/log_logstash.so
