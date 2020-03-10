@@ -887,6 +887,7 @@ autoconf
     --disable-synproxy \
     --disable-write_stackdriver \
     --disable-gpu_nvidia \
+    --disable-buddyinfo \
     --disable-ipstats \
     --disable-redfish \
     --disable-slurm \
