@@ -1630,6 +1630,9 @@ make check
 
 
 %changelog
+* Tue Mar 10 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.11.0-1
+- [DRAFT] rebase to 5.11
+
 * Fri Mar 06 2020 Matthias Runge <mrunge@redhat.com> - 5.10.0-3
 - add provides for snmp_agent to make it compatible with EPEL
 
