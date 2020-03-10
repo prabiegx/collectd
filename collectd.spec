@@ -893,6 +893,7 @@ autoconf
     --disable-redfish \
     --disable-slurm \
     --disable-ubi \
+    --disable-write_influxdb_udp \
 %if 0%{?enable_lvm}
     --enable-lvm \
 %else
