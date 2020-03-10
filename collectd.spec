@@ -17,6 +17,7 @@
 %global enable_dpdkevents 0
 %endif
 
+%global enable_dpdk_telemetry 1
 %global enable_pcie_errors 1
 %global enable_ganglia 0
 
@@ -298,6 +299,16 @@ Dpdkevents plugin collects and reports following events from DPDK based
 applications:
 - link status of network ports bound with DPDK
 - keep alive events related to DPDK logical cores
+%endif
+
+
+%if 0%{?enable_dpdk_telemetry} >0
+%package dpdk_telemetry
+Summary:       Plugin to fetch DPDK metrics
+Provides:      %{name}-dpdk_telemetry = %{version}-%{release}
+BuildRequires: jansson
+%description dpdk_telemetry
+Provides an easy way to use the DPDK telemetry API to query ethernet device metrics.
 %endif
 
 
@@ -969,6 +980,11 @@ autoconf
 %if 0%{?enable_dpdkstat}==0
     --disable-dpdkstat \
 %endif
+%if 0%{?enable_dpdk_telemetry} >0
+    --enable-dpdk_telemetry \
+%else
+    --disable-dpdk_telemetry \
+%endif
 %if 0%{?enable_intel_pmu}==0
     --disable-intel_pmu \
 %else
@@ -1320,6 +1336,11 @@ make check
 %if 0%{?enable_dpdkstat} > 0
 %files dpdkstat
 %{_libdir}/collectd/dpdkstat.so
+%endif
+
+%if 0%{?enable_dpdk_telemetry} > 0
+%files dpdk_telemetry
+%{_libdir}/collectd/dpdk_telemetry.so
 %endif
 
 %files drbd
