@@ -72,7 +72,7 @@ License: MIT and GPLv2
 Group: System Environment/Daemons
 URL: https://collectd.org/
 
-Source: https://collectd.org/files/%{name}-%{version}.tar.bz2
+Source: https://github.com/%{name}/%{name}/releases/download/%{name}-%{version}/%{name}-%{version}.tar.bz2
 Source1: collectd-httpd.conf
 Source2: collectd.service
 Source11: default-plugins-cpu.conf
@@ -1630,7 +1630,7 @@ make check
 
 
 %changelog
-* Mon Mar 16 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.11.0-1
+* Thu Mar 19 2020 Piotr Rabiega <piotrx.rabiega@intel.com> - 5.11.0-1
 - rebase to 5.11
 
 * Fri Mar 06 2020 Matthias Runge <mrunge@redhat.com> - 5.10.0-3
